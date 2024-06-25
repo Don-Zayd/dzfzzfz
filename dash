@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dad2d2;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .header {
+            color: #800404e3;
+            padding: 50px;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+            margin-left: auto ;
+            margin-right: auto;
+        }
+        /* Styles pour le bouton */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #087eb9c5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none; /* Masqué par défaut */
+            }
+
+            /* Afficher le bouton lorsque l'utilisateur défile vers le bas */
+        body.scrolled #scrollToTopBtn {
+            display: block;
+                }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .chart {
+            width: 300px;
+            height: 300px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+        #fileInput {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .highlighted-row {
+            font-style: italic;
+            font-weight: bold;
+            color: #1b15d7;
+            background-color: beige;
+        }
+        .total-message {
+            color: rgb(203, 112, 22);
+            font-weight: bold;
+            text-align: center;
+            
+           
+        }
+        .imgi{
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .custom-message {
+            color: rgb(161, 25, 181);
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            background-color: blanchedalmond;
+        }
+        .hodor{
+            text-align: center;
+            color: rgb(3, 84, 160);
+            
+
+        }
+        .eff{
+            text-align: center;
+            padding: 10px;
+            border: solid salmon;
+            background-color: aliceblue;
+            color: rgb(191, 17, 118);
+            font-style: italic;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #333333ae;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <img src="C:\Users\ZAYED\Desktop\stage\logo1.png" alt=" LOGO ENTREPRISE ">
+    <h1 class="header">Chart Dashboard</h1>
+ 
+        
+    
+    
+    <input type="file" id="fileInput" class="highlighted-row" >
+    <br><br>
+    <div id="excelData"></div>
+    <div id="totalMessageContainer0"></div>
+    <p class="custom-message"> PRODUCTION ENERGIE BRUTE (MWh) : </p>
+    <div class="container">
+        <div class="chart">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+    <div id="totalMessageContainer"></div>
+    <p class="custom-message"> CONSOMMATION AUXILIAIRES  (MWh) : </p>
+    <div class="container">
+        <div class="chart">
+            <canvas id="doughnutChart"></canvas>
+        </div>
+    </div>
+    <div id="totalMessageContainer2"></div>
+    <p class="custom-message">PRODUCTION ENERGIE NETTE  (MWh) :  </p>
+    <div class="container">
+        <div class="chart">
+            <canvas id="polarAreaChart"></canvas>
+        </div>
+    </div>
+    <div id="totalMessageContainer3"></div>
+    <p class="custom-message">CONSOMMATION GAZ  (1000 NM3)	:    </p>
+   <div class="container">
+        <div class="chart">
+            <canvas id="barChart"></canvas>
+            
+        </div>
+        <p class="hodor">EN V.CAL</p>
+        <p>
+            <div id="totalMessageContainer4a"></div>
+            
+        </p>
+        <div class="chart">
+            <canvas id="barChart2"></canvas>
+            
+        </div>
+        <p class="hodor">EN V.MES</p>
+        <p>
+            
+            <div id="totalMessageContainer4b"></div>
+            
+        </p>
+    </div>
+   
+    <p class="custom-message">PRODUCTION ENERGIE REACTIVE (MVARh)	: </p>
+    
+    <div class="container">
+        <div class="chart">
+            <canvas id="pieChart2"></canvas>
+        </div>
+
+    </div>
+    <div id="totalMessageContainer5"></div>
+    
+    <p class="custom-message">CUMUL HEURES DE  MARCHE 	:</p>
+    <div class="container">
+        <div class="chart">
+            <canvas id="barChart3"></canvas>
+        </div>
+
+    </div>
+    <p class="custom-message">CUMUL DE DEMARRAGES :</p>
+    
+    <div class="container">
+        <div class="chart">
+            <canvas id="barChart4"></canvas>
+        </div>
+    </div>
+    
+    <div id="totalMessageContainer6"></div>
+
+  
+    <p class="footer">www.sitep.com.tn</p>
+    <P class="footer"> Fin d'analyse de rapoort</P>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    <button id="scrollToTopBtn">Revenir en TOP</button>
+
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-pyramid@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-funnel"></script>
+    <script>
+        document.getElementById('scrollToTopBtn').addEventListener('click', function() {
+             window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+                });
+            });
+
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) { // Afficher après avoir défilé de 100 pixels
+                    document.body.classList.add('scrolled');
+                } else {
+                    document.body.classList.remove('scrolled');
+                }
+            });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+            // Lorsque le bouton est cliqué, faites défiler jusqu'en haut de la page
+
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                
+                const startRow = 7;
+                const endRow = 15;
+              
+
+                // Obtenir les en-têtes
+                const headers = [];
+                const range = XLSX.utils.decode_range(worksheet['!ref']);
+                const headerRow = 0;
+                for (let C = range.s.c; C <= range.e.c; ++C) {
+                    const cell = worksheet[XLSX.utils.encode_cell({ r: headerRow, c: C })];
+                    headers.push(cell ? cell.v : `COL${C + 1}`);
+                }
+
+                // Obtenir les lignes 7 à 15
+                const rows = [];
+                for (let R = startRow - 1; R < endRow; ++R) {
+                    const row = [];
+                    for (let C = range.s.c; C <= range.e.c; ++C) {
+                        const cell = worksheet[XLSX.utils.encode_cell({ r: R, c: C })];
+                        row.push(cell ? cell.v : '');
+                    }
+                    rows.push(row);
+                }
+
+               
+
+                // Générer le tableau HTML pour les lignes 7 à 15
+                let html = '<table><thead><tr>';
+                headers.forEach(header => {
+                    html += `<th>${header}</th>`;
+                });
+                html += '</tr></thead><tbody>';
+                rows.forEach(row => {
+                    html += '<tr>';
+                    row.forEach(cell => {
+                        html += `<td>${cell}</td>`;
+                    });
+                    html += '</tr>';
+                });
+
+                
+
+                document.getElementById('excelData').innerHTML = html;
+
+                // Lire les cellules 19C, 19D, 19E pour le diagramme en secteurs (pie chart)
+                const cell19C = worksheet['C19'] ? worksheet['C19'].v : 0;
+                const cell19D = worksheet['D19'] ? worksheet['D19'].v : 0;
+                const cell19E = worksheet['E19'] ? worksheet['E19'].v : 0;
+
+                // Création du diagramme en secteurs (pie chart) avec Chart.js
+                const ctxPie = document.getElementById('pieChart').getContext('2d');
+                new Chart(ctxPie, {
+                    type: 'pie',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell19C, cell19D, cell19E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        title: {
+                            display: true,
+                            text: 'PRODUCTION ENERGIE BRUTE (MWh)',
+                        }
+                    }
+                });
+
+                // Afficher la case 19F avec un message personnalisé entre les deux graphiques
+                const cell19F = worksheet['F19'] ? worksheet['F19'].v : '';
+                const totalMessage = document.createElement('p');
+                totalMessage.classList.add('total-message');
+                totalMessage.textContent = `Le Total est = ${cell19F} MWh`;
+                document.getElementById('totalMessageContainer').appendChild(totalMessage);
+
+                // Lire les cellules 24C, 24D, 24E pour le diagramme en anneau (doughnut chart)
+                const cell24C = worksheet['C24'] ? worksheet['C24'].v : 0;
+                const cell24D = worksheet['D24'] ? worksheet['D24'].v : 0;
+                const cell24E = worksheet['E24'] ? worksheet['E24'].v : 0;
+
+                // Création du diagramme en anneau (doughnut chart) avec Chart.js
+                const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+                new Chart(ctxDoughnut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell24C, cell24D, cell24E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        title : {
+                            display: true,
+                            text: 'CONSOMMATION AUXILIAIRES  (MWh)'
+                        }
+                        
+                    }
+                });
+                const cell24F = worksheet['F24'] ? worksheet['F24'].v : '';
+                const totalMessage2 = document.createElement('p');
+                totalMessage2.classList.add('total-message');
+                totalMessage2.textContent = `Le Total est = ${cell24F} MWh`;
+                document.getElementById('totalMessageContainer2').appendChild(totalMessage2);
+
+            
+                const cell29C = worksheet['C29'] ? worksheet['C29'].v : 0;
+                const cell29D = worksheet['D29'] ? worksheet['D29'].v : 0;
+                const cell29E = worksheet['E29'] ? worksheet['E29'].v : 0;
+            
+                const ctxPolarArea = document.getElementById('polarAreaChart').getContext('2d');
+                new Chart(ctxPolarArea, {
+                    type: 'polarArea',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell29C, cell29D, cell29E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            
+        
+        });
+                const cell29F = worksheet['F29'] ? worksheet['F29'].v : '';
+                const totalMessage3 = document.createElement('p');
+                totalMessage3.classList.add('total-message');
+                totalMessage3.textContent = `Le Total est = ${cell29F} MWh`;
+                document.getElementById('totalMessageContainer3').appendChild(totalMessage3);
+    
+                const cell5D = worksheet['D5'] ? worksheet['D5'].v : '';
+                const cell5E = worksheet['E5'] ? worksheet['E5'].v : '';
+                const cell5F = worksheet['F5'] ? worksheet['F5'].v : '';
+                const totalMessage0 = document.createElement('p');
+                totalMessage0.classList.add('eff');
+                totalMessage0.textContent = `Date : Le ${cell5D} / ${cell5E} / ${cell5F}`;
+                document.getElementById('totalMessageContainer0').appendChild(totalMessage0);
+                
+                const cell34C = worksheet['C34'] ? worksheet['C34'].v : 0;
+                const cell34D = worksheet['D34'] ? worksheet['D34'].v : 0;
+                const cell34E = worksheet['E34'] ? worksheet['E34'].v : 0;
+
+                const ctxBarChart = document.getElementById('barChart').getContext('2d');
+                new Chart(ctxBarChart, {
+                    type: 'bar',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell34C, cell34D, cell34E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                
+                }
+            }
+        
+        
+        
+        
+        
+        )
+                const cell35C = worksheet['C35'] ? worksheet['C35'].v : 0;
+                const cell35D = worksheet['D35'] ? worksheet['D35'].v : 0;
+                const cell35E = worksheet['E35'] ? worksheet['E35'].v : 0;
+
+                const ctxBarChart2 = document.getElementById('barChart2').getContext('2d');
+                new Chart(ctxBarChart2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell35C, cell35D, cell35E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+               
+                
+            }
+        });
+                const cell34F = worksheet['F34'] ? worksheet['F34'].v : '';
+                const totalMessage4a = document.createElement('p');
+                totalMessage4a.classList.add('total-message');
+                totalMessage4a.textContent = `Le Total est = ${cell34F} 1000 NM3(V.CAL)`;
+                document.getElementById('totalMessageContainer4a').appendChild(totalMessage4a);
+
+                const cell35F = worksheet['F35'] ? worksheet['F35'].v : '';
+                const totalMessage4b = document.createElement('p');
+                totalMessage4b.classList.add('total-message');
+                totalMessage4b.textContent = `Le Total est = ${cell35F} 1000 NM3(V.MES)`;
+                document.getElementById('totalMessageContainer4b').appendChild(totalMessage4b);
+    
+                const cell39C = worksheet['C39'] ? worksheet['C39'].v : 0;
+                const cell39D = worksheet['D39'] ? worksheet['D39'].v : 0;
+                const cell39E = worksheet['E39'] ? worksheet['E39'].v : 0;  
+                
+                const ctxPie2 = document.getElementById('pieChart2').getContext('2d');
+                new Chart(ctxPie2, {
+                    type: 'pie',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell39C, cell39D, cell39E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        
+                    }
+                });
+
+                const cell39F = worksheet['F39'] ? worksheet['F39'].v : '';
+                const totalMessage5 = document.createElement('p');
+                totalMessage5.classList.add('total-message');
+                totalMessage5.textContent = `Le Total est = ${cell39F} MVARh`;
+                document.getElementById('totalMessageContainer5').appendChild(totalMessage5);
+
+
+
+                const cell44C = worksheet['C44'] ? worksheet['C44'].v : 0;
+                const cell44D = worksheet['D44'] ? worksheet['D44'].v : 0;
+                const cell44E = worksheet['E44'] ? worksheet['E44'].v : 0;  
+
+                const ctxBarChart3 = document.getElementById('barChart3').getContext('2d');
+                new Chart(ctxBarChart3, {
+                    type: 'bar',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell44C, cell44D, cell44E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                
+                }
+            });
+                const cell49C = worksheet['C49'] ? worksheet['C49'].v : 0;
+                const cell49D = worksheet['D49'] ? worksheet['D49'].v : 0;
+                const cell49E = worksheet['E49'] ? worksheet['E49'].v : 0;  
+
+                const ctxBarChart4 = document.getElementById('barChart4').getContext('2d');
+                new Chart(ctxBarChart4, {
+                    type: 'bar',
+                    data: {
+                        labels: ['TG1', 'TG2', 'TG3'],
+                        datasets: [{
+                            data: [cell49C, cell49D, cell49E],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                
+                }
+            });
+                const cell51E = worksheet['E51'] ? worksheet['E51'].v : '';
+                const totalMessage6 = document.createElement('p');
+                totalMessage6.classList.add('eff');
+                totalMessage6.textContent = `L'effectif d'aujourd'hui égale à : ${cell51E} `;
+                document.getElementById('totalMessageContainer6').appendChild(totalMessage6);
+
+        
+
+            
+            
+       
+    
+    
+    
+    
+    
+    
+    
+
+
+    };
+            reader.readAsArrayBuffer(file);
+});
+    </script>
+</body>
+</html>
